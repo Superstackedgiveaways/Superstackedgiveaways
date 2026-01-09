@@ -59,7 +59,7 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
     },
 
     callback: function (response) {
-      fetch("https://paystack-backend-l8i7.onrender.com/verify-payment", {
+      fetch("https://stacked-giveaway-backend.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reference: response.reference })
