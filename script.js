@@ -59,7 +59,7 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
     },
 
     callback: function (response) {
-      fetch("https://superstackedgiveaways.onrender.com", {
+      fetch("https://stacked-giveaway-backend.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reference: response.reference })
@@ -96,4 +96,5 @@ document.getElementById("instagram-link").addEventListener("click", function (e)
   window.location = appLink;
   setTimeout(() => window.open(webLink, "_blank"), 1000);
 });
+
 
