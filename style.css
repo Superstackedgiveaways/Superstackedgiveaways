@@ -1,0 +1,202 @@
+/* ================= GLOBAL ================= */
+
+body {
+  margin: 0;
+  font-family: 'Poppins', Arial, sans-serif;
+  background: #0d0d0d;
+  color: white;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ================= HERO SECTION ================= */
+
+.hero {
+  padding: 40px 20px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: gold;
+}
+
+.tagline {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.hero img {
+  display: block;
+  max-width: 80%;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 15px;
+}
+
+/* ================= BUTTONS ================= */
+
+button {
+  background: gold;
+  color: #000;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* ================= GIVEAWAY DESCRIPTION ================= */
+
+.giveaway-description {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  background: #f7f7f7;
+  border-left: 6px solid gold;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
+}
+
+.giveaway-description a {
+  color: #d4a300;
+  font-weight: bold;
+}
+
+.giveaway-description a:hover {
+  text-decoration: underline;
+}
+
+/* ================= HOW IT WORKS ================= */
+
+.how {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #111;
+  border-radius: 15px;
+}
+
+.how h2 {
+  margin-bottom: 25px;
+  color: gold;
+  font-size: 28px;
+}
+
+.how ol {
+  padding-left: 20px;
+  text-align: left;
+}
+
+.how ol li {
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.how ol li a {
+  color: gold;
+  font-weight: bold;
+}
+
+.how ol li a:hover {
+  text-decoration: underline;
+}
+
+/* ================= PAYMENT SECTION ================= */
+
+.pay {
+  padding: 30px 20px;
+  background: #111;
+  margin: 40px auto;
+  border-radius: 15px;
+  max-width: 500px;
+}
+
+.pay h2 {
+  color: gold;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+/* ================= FORM ================= */
+
+input {
+  width: 90%;
+  max-width: 320px;
+  padding: 12px;
+  margin: 10px auto;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  display: block;
+}
+
+input:focus {
+  outline: 2px solid gold;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  padding: 25px 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+footer a {
+  color: gold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+/* ================= SUCCESS PAGE ================= */
+
+.success-box {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #111;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+}
+
+.success-box p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.success-box strong {
+  color: gold;
+}
+
+.success-box a {
+  color: gold;
+  font-weight: bold;
+}
+
+.success-box a:hover {
+  text-decoration: underline;
+}
