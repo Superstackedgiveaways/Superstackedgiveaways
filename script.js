@@ -42,7 +42,7 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
   }
 
   let handler = PaystackPop.setup({
-    key: "pk_test_8aab64c3f430d86f713f872e0855d080747fb0a7", // your live key
+    key: "pk_live_8a7ac0a714d353356d6db58b4a3643bcf20f6aa4", // your live key
     email: email,
     amount: 7500,
     currency: "GHS",
