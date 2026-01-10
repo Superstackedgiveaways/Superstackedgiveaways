@@ -47,7 +47,7 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
     amount: 7500,
     currency: "GHS",
     ref: generateReference(),
-    channels: ["card", "mobile_money", "bank"],
+    channels: ["card", "mobile_money", "bank", "ussd"],
 
     metadata: {
       custom_fields: [
