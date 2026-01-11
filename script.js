@@ -14,13 +14,8 @@ function isValidGhanaNumber(phone) {
   return ghanaRegex.test(phone);
 }
 
-// ================= GENERATE PAYSTACK REFERENCE =================
-function generateReference() {
-  return "STACKED_" + Math.floor(Math.random() * 1000000000) + "_" + Date.now();
-}
-
-// ================= HANDLE PAYMENT =================
-document.getElementById("entryForm").addEventListener("submit", function (e) {
+// ================= HANDLE PAYMENT (BACKEND INITIALIZATION) =================
+document.getElementById("entryForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const email = document.getElementById("email").value.trim();
@@ -41,50 +36,33 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
     return;
   }
 
-  let handler = PaystackPop.setup({
-    key: "pk_live_8a7ac0a714d353356d6db58b4a3643bcf20f6aa4", // your live key
-    email: email,
-    amount: 7500,
-    currency: "GHS",
-    ref: generateReference(),
-    channels: ["card", "mobile_money", "bank", "ussd"],
-
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "WhatsApp Number",
-          variable_name: "whatsapp",
-          value: phone
-        }
-      ]
-    },
-
-    callback: function (response) {
-      // ✅ Send request to the correct endpoint
-      fetch("https://stacked-giveaway-backend.onrender.com/verify-payment", {
+  try {
+    const response = await fetch(
+      "https://stacked-giveaway-backend.onrender.com/initialize-payment",
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reference: response.reference, email: email })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            window.location.href = "success.html?email=" + encodeURIComponent(email);
-          } else {
-            alert("❌ Payment could not be verified: " + data.message);
-          }
+        body: JSON.stringify({
+          email: email,
+          amount: 7500, // GHS 75 in pesewas
+          phone: phone,
+          provider: "vod" // ✅ TELECEL
         })
-        .catch(() => {
-          alert("❌ Verification error. Try again.");
-        });
-    },
+      }
+    );
 
-    onClose: function () {
-      alert("❌ Payment cancelled.");
+    const data = await response.json();
+
+    if (data.status && data.data.authorization_url) {
+      // ✅ Redirect user to Paystack hosted payment page
+      window.location.href = data.data.authorization_url;
+    } else {
+      alert("❌ Payment could not be started. Please try again.");
     }
-  });
-
-  handler.openIframe();
+  } catch (error) {
+    console.error(error);
+    alert("❌ Network error. Please try again.");
+  }
 });
 
 // ================= INSTAGRAM DEEP LINK =================
@@ -99,17 +77,16 @@ document.getElementById("instagram-link").addEventListener("click", function (e)
 });
 
 // ================= HERO SLIDESHOW =================
-const slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
 function showNextSlide() {
-  slides.forEach(slide => slide.classList.remove('active'));
-  slides[currentSlide].classList.add('active');
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[currentSlide].classList.add("active");
   currentSlide = (currentSlide + 1) % slides.length;
 }
 
-// Start slideshow
 if (slides.length > 0) {
-  slides[0].classList.add('active');
+  slides[0].classList.add("active");
   setInterval(showNextSlide, 3000);
 }
