@@ -1,4 +1,30 @@
-// ================= HANDLE PAYMENT =================
+/* =====================================
+   SUPERSTACKED GIVEAWAYS - SCRIPT.JS
+   ===================================== */
+
+// Scroll to payment section
+function scrollToPay() {
+  document.getElementById("pay").scrollIntoView({ behavior: "smooth" });
+}
+
+// Email validation
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Ghana phone validation
+function isValidGhanaNumber(phone) {
+  const ghanaRegex = /^(024|054|053|055|059|020|050|027|057|026|056)\d{7}$/;
+  return ghanaRegex.test(phone);
+}
+
+// Generate unique Paystack reference
+function generateReference() {
+  return "STACKED_" + Math.floor(Math.random() * 1000000000) + "_" + Date.now();
+}
+
+// Form submit
 document.getElementById("entryForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -13,20 +39,28 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
   if (!isValidGhanaNumber(phone)) {
     alert(
       "❌ Please enter a valid Ghana WhatsApp number.\n\n" +
-      "MTN: 024, 054, 055, 059\n" +
+      "MTN: 024, 053, 054, 055, 059\n" +
       "Telecel: 020, 050\n" +
       "AirtelTigo: 027, 057, 026, 056"
     );
     return;
   }
 
-  let handler = PaystackPop.setup({
+  const handler = PaystackPop.setup({
     key: "pk_live_8a7ac0a714d353356d6db58b4a3643bcf20f6aa4",
     email: email,
-    amount: 7500,
+    amount: 7500, // GHS 75
     currency: "GHS",
     ref: generateReference(),
-    channels: ["card", "mobile_money", "bank", "ussd"],
+
+    // 🔥 ENABLE ALL PAYMENT PROVIDERS
+    channels: [
+      "card",
+      "mobile_money",
+      "ussd",
+      "bank",
+      "bank_transfer"
+    ],
 
     metadata: {
       custom_fields: [
@@ -34,6 +68,11 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
           display_name: "WhatsApp Number",
           variable_name: "whatsapp",
           value: phone
+        },
+        {
+          display_name: "Platform",
+          variable_name: "platform",
+          value: "SuperStacked Giveaways"
         }
       ]
     },
@@ -41,19 +80,29 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
     callback: function (response) {
       fetch("https://stacked-giveaway-backend.onrender.com/verify-payment", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reference: response.reference, email: email })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          reference: response.reference
+        })
       })
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            window.location.href = "success.html?email=" + encodeURIComponent(email);
+            alert(
+              "✅ Payment successful!\n\n" +
+              "Your entry has been recorded.\n" +
+              "Your entry code will be sent to your email."
+            );
           } else {
-            alert("❌ Payment could not be verified: " + data.message);
+            alert("❌ Payment verification failed. Please contact support.");
+            console.error(data);
           }
         })
-        .catch(() => {
-          alert("❌ Verification error. Try again.");
+        .catch(err => {
+          alert("❌ Verification error. Please try again.");
+          console.error(err);
         });
     },
 
@@ -64,3 +113,18 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
 
   handler.openIframe();
 });
+
+// Instagram deep link handling
+document
+  .getElementById("instagram-link")
+  .addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const appLink = "instagram://user?username=Stacked.giveaway";
+    const webLink = "https://www.instagram.com/Stacked.giveaway";
+
+    window.location.href = appLink;
+    setTimeout(() => {
+      window.open(webLink, "_blank");
+    }, 1000);
+  });
