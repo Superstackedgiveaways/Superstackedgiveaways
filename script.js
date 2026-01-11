@@ -10,11 +10,42 @@ function isValidEmail(email) {
 }
 
 function isValidGhanaNumber(phone) {
-  const ghanaRegex = /^(024|054|055|059|020|050|027|057|026|056)\d{7}$/;
+  const ghanaRegex = /^(024|053|054|055|059|020|050|027|057|026|056)\d{7}$/;
   return ghanaRegex.test(phone);
 }
 
-// ================= HANDLE PAYMENT (BACKEND INITIALIZATION) =================
+// ================= DETECT NETWORK PROVIDER =================
+function detectProvider(phone) {
+  // MTN
+  if (
+    phone.startsWith("024") ||
+    phone.startsWith("053") ||
+    phone.startsWith("054") ||
+    phone.startsWith("055") ||
+    phone.startsWith("059")
+  ) {
+    return "mtn";
+  }
+
+  // Telecel (Vodafone)
+  if (phone.startsWith("020") || phone.startsWith("050")) {
+    return "vod";
+  }
+
+  // AirtelTigo
+  if (
+    phone.startsWith("027") ||
+    phone.startsWith("057") ||
+    phone.startsWith("026") ||
+    phone.startsWith("056")
+  ) {
+    return "atl";
+  }
+
+  return null;
+}
+
+// ================= HANDLE PAYMENT =================
 document.getElementById("entryForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -28,11 +59,18 @@ document.getElementById("entryForm").addEventListener("submit", async function (
 
   if (!isValidGhanaNumber(phone)) {
     alert(
-      "❌ Please enter a valid Ghana WhatsApp number.\n\n" +
-      "MTN: 024, 054, 055, 059\n" +
+      "❌ Please enter a valid Ghana phone number.\n\n" +
+      "MTN: 024, 053, 054, 055, 059\n" +
       "Telecel: 020, 050\n" +
       "AirtelTigo: 027, 057, 026, 056"
     );
+    return;
+  }
+
+  const provider = detectProvider(phone);
+
+  if (!provider) {
+    alert("❌ Unable to detect mobile network.");
     return;
   }
 
@@ -44,9 +82,9 @@ document.getElementById("entryForm").addEventListener("submit", async function (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: email,
-          amount: 7500, // GHS 75 in pesewas
+          amount: 7500, // GHS 75 (pesewas)
           phone: phone,
-          provider: "vod" // ✅ TELECEL
+          provider: provider
         })
       }
     );
@@ -54,7 +92,7 @@ document.getElementById("entryForm").addEventListener("submit", async function (
     const data = await response.json();
 
     if (data.status && data.data.authorization_url) {
-      // ✅ Redirect user to Paystack hosted payment page
+      // ✅ Paystack hosted checkout (card, momo, bank, ussd)
       window.location.href = data.data.authorization_url;
     } else {
       alert("❌ Payment could not be started. Please try again.");
