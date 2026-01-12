@@ -49,7 +49,7 @@ document.getElementById("entryForm").addEventListener("submit", function (e) {
   const handler = PaystackPop.setup({
     key: "pk_live_8a7ac0a714d353356d6db58b4a3643bcf20f6aa4",
     email: email,
-    amount: 7500, // GHS 75
+    amount: 3500, // GHS 35
     currency: "GHS",
     ref: generateReference(),
 
