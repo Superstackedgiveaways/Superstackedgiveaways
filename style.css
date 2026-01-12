@@ -284,3 +284,101 @@ footer {
     font-size: 1.2rem;
   }
 }
+/* =========================
+   LEGAL PAGES – DARK THEME
+   SuperStacked Giveaways
+========================= */
+
+.ssg-rules-wrapper,
+.ssg-disclaimer-wrapper,
+.ssg-refund-wrapper {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 35px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  line-height: 1.8;
+  background-color: #0f0f0f; /* dark background */
+  color: #e5e5e5; /* soft light text */
+  border-radius: 10px;
+  border: 1px solid rgba(255, 204, 0, 0.15);
+}
+
+/* =========================
+   MAIN TITLES
+========================= */
+.ssg-rules-title,
+.ssg-disclaimer-title,
+.ssg-refund-title {
+  font-size: 34px;
+  margin-bottom: 25px;
+  color: #d4af37; /* dark yellow / gold */
+}
+
+/* =========================
+   SECTION HEADINGS
+========================= */
+.ssg-rules-wrapper h2,
+.ssg-disclaimer-wrapper h2,
+.ssg-refund-wrapper h2 {
+  font-size: 21px;
+  margin-top: 30px;
+  color: #f1c232; /* brighter gold */
+}
+
+/* =========================
+   PARAGRAPHS
+========================= */
+.ssg-rules-wrapper p,
+.ssg-disclaimer-wrapper p,
+.ssg-refund-wrapper p {
+  margin-bottom: 16px;
+  color: #dddddd;
+}
+
+/* =========================
+   LISTS
+========================= */
+.ssg-rules-wrapper ul {
+  padding-left: 22px;
+}
+
+.ssg-rules-wrapper li {
+  margin-bottom: 10px;
+  color: #dcdcdc;
+}
+
+/* =========================
+   LINKS
+========================= */
+.ssg-rules-wrapper a,
+.ssg-disclaimer-wrapper a,
+.ssg-refund-wrapper a {
+  color: #ffcc00;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 204, 0, 0.6);
+}
+
+.ssg-rules-wrapper a:hover,
+.ssg-disclaimer-wrapper a:hover,
+.ssg-refund-wrapper a:hover {
+  color: #ffe066;
+  border-bottom-color: #ffe066;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 600px) {
+  .ssg-rules-wrapper,
+  .ssg-disclaimer-wrapper,
+  .ssg-refund-wrapper {
+    padding: 22px;
+    margin: 40px 15px;
+  }
+
+  .ssg-rules-title,
+  .ssg-disclaimer-title,
+  .ssg-refund-title {
+    font-size: 26px;
+  }
+}
