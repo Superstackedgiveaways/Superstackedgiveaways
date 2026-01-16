@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stacked Giveaway</title>
+
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero">
+    <h1>STACKED GIVEAWAY</h1>
+    <p class="tagline">Win Big. Stay Stacked.</p>
+
+    <img
+      src="img/5CA5D0A6-0A86-4008-859F-DD04C37EA562.png"
+      alt="Stacked Giveaway"
+    />
+
+    <button onclick="scrollToPay()">🎟️ Enter Giveaway</button>
+  </section>
+
+  <!-- ================= COUNTDOWN TIMER ================= -->
+<div class="sg-countdown-wrapper">
+  <p class="sg-countdown-title">Giveaway Ends In</p>
+
+  <div class="sg-countdown">
+    <div class="sg-countdown-box">
+      <span class="sg-countdown-number" id="sg-days">00</span>
+      <span class="sg-countdown-label">Days</span>
+    </div>
+
+    <div class="sg-countdown-box">
+      <span class="sg-countdown-number" id="sg-hours">00</span>
+      <span class="sg-countdown-label">Hours</span>
+    </div>
+
+    <div class="sg-countdown-box">
+      <span class="sg-countdown-number" id="sg-minutes">00</span>
+      <span class="sg-countdown-label">Minutes</span>
+    </div>
+
+    <div class="sg-countdown-box">
+      <span class="sg-countdown-number" id="sg-seconds">00</span>
+      <span class="sg-countdown-label">Seconds</span>
+    </div>
+  </div>
+</div>
+
+
+  <!-- ================= GIVEAWAY DESCRIPTION ================= -->
+  <section class="giveaway-description">
+    <p>
+      Stacked Giveaway is a promotional campaign offering prizes such as an
+      <strong>iPhone 16 Pro Max</strong> and a
+      <strong>PlayStation 5</strong>.
+      Participants voluntarily purchase an entry ticket worth
+      <strong>GHS 35</strong> via Paystack to register.
+      After payment, a unique entry code is issued and sent to the email address provided.
+      Winners are selected fairly according to stated rules and announced via email
+      and on our Instagram page
+      <a href="https://www.instagram.com/Stacked.giveaway" target="_blank">
+        @Stacked.giveaway
+      </a>.
+      Purchase of a ticket does not guarantee winning.
+      Please read the Giveaway Rules, Terms & Conditions, Disclaimer,
+      and Refund Policy before participating.
+    </p>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="how">
+    <h2>How It Works</h2>
+    <ol>
+      <li>Buy an entry ticket (GHS 35)</li>
+      <li>Receive a unique entry code via email</li>
+      <li>
+        Follow our Instagram page
+        <a href="https://www.instagram.com/Stacked.giveaway" target="_blank">
+          @Stacked.giveaway
+        </a>
+      </li>
+      <li>Winners are selected fairly</li>
+      <li>Winners announced on Instagram and via email</li>
+    </ol>
+  </section>
+
+  <!-- ================= PAYMENT / ENTRY ================= -->
+  <section class="pay" id="pay">
+    <h2>Enter Giveaway</h2>
+
+    <form id="entryForm">
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email address"
+        required
+      />
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Enter your WhatsApp number"
+        required
+      />
+
+      <button type="submit">Proceed to Payment</button>
+    </form>
+
+    <p class="price">
+      Entry Fee: <strong>GHS 35</strong>
+    </p>
+
+    <small>🔒 Secured by Paystack · Mobile Money & Cards Accepted</small>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 Stacked Giveaway</p>
+
+    <p>
+      Instagram:
+      <a href="#" id="instagram-link">@Stacked.giveaway</a>
+    </p>
+
+    <p class="footer-links">
+      <a href="https://superstackedgiveaways.github.io/Superstackedgiveaways/giveaway-rules.html" target="_blank">Giveaway Rules</a> |
+      <a
+        href="https://superstackedgiveaways.github.io/Superstackedgiveaways/terms.html"
+        target="_blank"
+      >
+        Terms & Conditions
+      </a> |
+      <a href="https://superstackedgiveaways.github.io/Superstackedgiveaways/disclaimer.html" target="_blank">Disclaimer</a> |
+      <a href="https://superstackedgiveaways.github.io/Superstackedgiveaways/refund-policy.html" target="_blank">Refund Policy</a>
+    </p>
+  </footer>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+
+</body>
+</html>

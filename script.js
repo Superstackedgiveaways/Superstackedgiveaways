@@ -1,0 +1,179 @@
+/* =====================================
+   SUPERSTACKED GIVEAWAYS - SCRIPT.JS
+   ===================================== */
+
+// Scroll to payment section
+function scrollToPay() {
+  document.getElementById("pay").scrollIntoView({ behavior: "smooth" });
+}
+
+// Email validation
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Ghana phone validation
+function isValidGhanaNumber(phone) {
+  const ghanaRegex = /^(024|054|053|055|059|020|050|027|057|026|056)\d{7}$/;
+  return ghanaRegex.test(phone);
+}
+
+// Generate unique Paystack reference
+function generateReference() {
+  return "STACKED_" + Math.floor(Math.random() * 1000000000) + "_" + Date.now();
+}
+
+// Form submit
+document.getElementById("entryForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if (!isValidEmail(email)) {
+    alert("❌ Please enter a valid email address.");
+    return;
+  }
+
+  if (!isValidGhanaNumber(phone)) {
+    alert(
+      "❌ Please enter a valid Ghana WhatsApp number.\n\n" +
+      "MTN: 024, 053, 054, 055, 059\n" +
+      "Telecel: 020, 050\n" +
+      "AirtelTigo: 027, 057, 026, 056"
+    );
+    return;
+  }
+
+  const handler = PaystackPop.setup({
+    key: "pk_live_8a7ac0a714d353356d6db58b4a3643bcf20f6aa4",
+    email: email,
+    amount: 3500, // GHS 35
+    currency: "GHS",
+    ref: generateReference(),
+
+    // 🔥 ENABLE ALL PAYMENT PROVIDERS
+    channels: [
+      "card",
+      "mobile_money",
+      "ussd",
+      "bank",
+      "bank_transfer"
+    ],
+
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "WhatsApp Number",
+          variable_name: "whatsapp",
+          value: phone
+        },
+        {
+          display_name: "Platform",
+          variable_name: "platform",
+          value: "SuperStacked Giveaways"
+        }
+      ]
+    },
+
+    callback: function (response) {
+      fetch("https://stacked-giveaway-backend.onrender.com/verify-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          reference: response.reference
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert(
+              "✅ Payment successful!\n\n" +
+              "Your entry has been recorded.\n" +
+              "Your entry code will be sent to your email."
+            );
+          } else {
+            alert("❌ Payment verification failed. Please contact support.");
+            console.error(data);
+          }
+        })
+        .catch(err => {
+          alert("❌ Verification error. Please try again.");
+          console.error(err);
+        });
+    },
+
+    onClose: function () {
+      alert("❌ Payment cancelled.");
+    }
+  });
+
+  handler.openIframe();
+});
+
+// Instagram deep link handling
+document
+  .getElementById("instagram-link")
+  .addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const appLink = "instagram://user?username=Stacked.giveaway";
+    const webLink = "https://www.instagram.com/Stacked.giveaway";
+
+    window.location.href = appLink;
+    setTimeout(() => {
+      window.open(webLink, "_blank");
+    }, 1000);
+  });
+
+  /* =========================
+   STACKED GIVEAWAY COUNTDOWN
+   (Scoped – No Conflicts)
+========================= */
+
+(function () {
+  const endDate = new Date("June 1, 2026 00:00:00").getTime();
+
+  const daysEl = document.getElementById("sg-days");
+  const hoursEl = document.getElementById("sg-hours");
+  const minutesEl = document.getElementById("sg-minutes");
+  const secondsEl = document.getElementById("sg-seconds");
+
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = endDate - now;
+
+    if (distance <= 0) {
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minutesEl.textContent = "00";
+      secondsEl.textContent = "00";
+
+      document.querySelector(".sg-countdown-title").textContent =
+        "Giveaway Ended";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (distance % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
