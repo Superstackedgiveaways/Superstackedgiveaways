@@ -135,45 +135,74 @@ document
 ========================= */
 
 (function () {
-  const endDate = new Date("June 1, 2026 00:00:00").getTime();
 
-  const daysEl = document.getElementById("sg-days");
-  const hoursEl = document.getElementById("sg-hours");
-  const minutesEl = document.getElementById("sg-minutes");
-  const secondsEl = document.getElementById("sg-seconds");
-
-  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  const startDate = new Date().getTime();
+  const endDate = new Date("2026-06-01T00:00:00+00:00").getTime();
 
   function updateCountdown() {
+
+    const daysEl = document.getElementById("sg-days");
+    const hoursEl = document.getElementById("sg-hours");
+    const minutesEl = document.getElementById("sg-minutes");
+    const secondsEl = document.getElementById("sg-seconds");
+    const titleEl = document.querySelector(".sg-countdown-title");
+    const progressBar = document.getElementById("sg-progress-bar");
+    const giveawayBtn = document.getElementById("enter-giveaway-btn");
+
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
     const now = new Date().getTime();
     const distance = endDate - now;
 
+    /* -------- Giveaway Ended -------- */
+
     if (distance <= 0) {
+
       daysEl.textContent = "00";
       hoursEl.textContent = "00";
       minutesEl.textContent = "00";
       secondsEl.textContent = "00";
 
-      document.querySelector(".sg-countdown-title").textContent =
-        "Giveaway Ended";
+      if (titleEl) titleEl.textContent = "Giveaway Ended";
+
+      if (giveawayBtn) giveawayBtn.style.display = "none";
+
+      if (progressBar) progressBar.style.width = "100%";
+
       return;
     }
 
+    /* -------- Time Calculations -------- */
+
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (distance % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
 
     daysEl.textContent = String(days).padStart(2, "0");
     hoursEl.textContent = String(hours).padStart(2, "0");
     minutesEl.textContent = String(minutes).padStart(2, "0");
     secondsEl.textContent = String(seconds).padStart(2, "0");
+
+    /* -------- 24hr Warning Flash -------- */
+
+    if (distance <= 86400000 && titleEl) {
+      titleEl.classList.add("sg-warning");
+    }
+
+    /* -------- Progress Bar -------- */
+
+    const totalDuration = endDate - startDate;
+    const elapsed = now - startDate;
+    const progress = (elapsed / totalDuration) * 100;
+
+    if (progressBar) {
+      progressBar.style.width = progress + "%";
+    }
+
   }
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
 })();
